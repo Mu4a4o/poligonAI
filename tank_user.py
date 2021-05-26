@@ -1,6 +1,6 @@
 import math
 import pygame
-
+'test'
 
 class Tank_gissinits(pygame.sprite.Sprite):
     def __init__(self, tank_x, tank_y, right_true=False, image_size=5):
