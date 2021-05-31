@@ -31,15 +31,11 @@ def bresenham(x1=0, y1=0, x2=0, y2=0, speed = 0):
             y += pdy
         t += 1
         list_line.append((x,y))
-    if speed != 1:
-        for i in range(0,len(list_line), speed):
-            del list_line[i:i+speed]
-    return  list_line
-    #return iter(list_line)
+    return iter(list_line)
 a =  bresenham(x1=0, y1=0, x2=10, y2=10, speed = 3)
-print(a)
 
-# x, y = next(a)
-# print(x,y)
-# x, y = next(a)
-# print(x,y)
+
+x, y = next(a)
+print(x,y)
+x, y = next(a)
+print(x,y)

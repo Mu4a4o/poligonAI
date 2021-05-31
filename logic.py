@@ -18,7 +18,7 @@ tank_gissinits_right = Tank_gissinits(tank_x=400, tank_y=400, right_true=True, i
 tank_base = Tank_base(tank_x=400, tank_y=400, image_size=image_size)
 tank_tower = Tank_tower(tank_x=400, tank_y=400, image_size=image_size)
 rock = Rocket(tank_x=500, tank_y=500, image_size=image_size)
-rock = Rocket(tank_x=tank_tower.image.get_rect().top, tank_y=tank_tower.image.get_rect().bottom, image_size=image_size)
+#rock = Rocket(tank_x=tank_tower.image.get_rect().top, tank_y=tank_tower.image.get_rect().bottom, image_size=image_size)
 
 tank_one.add(tank_gissinits_left, tank_gissinits_right, tank_base,tank_tower)
 running = True
@@ -69,17 +69,14 @@ while running:
         tank_base.rotate(right_down_rot=True)
         tank_tower.rotate(right_down_rot=True)
 
-    rock.update(tank_x=tank_tower.tank_x, tank_y=tank_tower.tank_y)
-    sc.blit(rock.image, rock.rect)
+
     tank_one.draw(sc)
     tank_one.update()
-
-
-
-
-    # rock.update(tank_x=tank_tower.tank_x, tank_y=tank_tower.tank_y)
+    #rock.update(tank_x=tank_tower.tank_x, tank_y=tank_tower.tank_y)
+    rock.update(tank_x=tank_tower.tank_x, tank_y=tank_tower.tank_y)
+    #rock.image.set_alpha(255)
+    sc.blit(rock.image, rock.rect)
     pygame.display.update()
     sc.fill((0, 0, 0))
     # FPS 60
-
     сlock.tick(60)
