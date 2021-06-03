@@ -217,7 +217,7 @@ class Tank_tower(pygame.sprite.Sprite):
             self.shoots_count += 1
         elif self.shoots_count == 10 and shoots_first >= 2:
             self.shoots_count = 0
-            self.shoots_first >= time.time()
+            self.shoots_first = time.time()
         if fire and self.shoots_count == 0:
             self.shoots_count += 1
 
@@ -258,6 +258,7 @@ class Tank_tower(pygame.sprite.Sprite):
                                             (self.image_group_shoots[self.shoots_count].get_width() // self.image_size,
                                              self.image_group_shoots[
                                                  self.shoots_count].get_height() // self.image_size))
+
         self.image = pygame.transform.rotate(self.image, self.angle)
         self.rect = self.image.get_rect(center=(self.tank_x, self.tank_y))
 
@@ -325,10 +326,13 @@ class Rocket(pygame.sprite.Sprite):
 
     def shoot(self):
         self.shot = True
+        self.shoots_first = time.time()
         self.mouse_x_shoot, self.mouse_y_shoot = pygame.mouse.get_pos()
         self.bresenham_line = bresenham(self.tank_x, self.tank_y, self.mouse_x_shoot, self.mouse_y_shoot, speed=7)
 
-    def update(self, tank_x, tank_y):
+
+    def update(self, tank_x, tank_y, shoots_first_tower):
+        shoots_first_rock = time.time() - shoots_first_tower
         if self.shot:
             try:
                 self.tank_x, self.tank_y = next(self.bresenham_line)
@@ -340,12 +344,12 @@ class Rocket(pygame.sprite.Sprite):
                 math.atan2((self.tank_x - self.mouse_x_shoot), (self.tank_y - self.mouse_y_shoot)))
             self.image = pygame.transform.scale(self.path_image, (self.path_image.get_width() // self.image_size,
                                                                   self.path_image.get_height() // self.image_size))
-            print(self.angle)
+
             self.image = pygame.transform.rotate(self.image, self.angle)
             self.rect = self.image.get_rect(center=(self.tank_x, self.tank_y))
 
 
-        else:
+        if shoots_first_rock >= 2:
             self.tank_y = tank_y
             self.tank_x = tank_x
             self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
