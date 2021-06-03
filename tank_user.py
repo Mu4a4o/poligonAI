@@ -300,7 +300,7 @@ def bresenham(x1=0, y1=0, x2=0, y2=0, speed=1) -> object:
     list_line_speed = []
     for i in range(0, len(list_line_all), speed):
         list_line_speed.append(list_line_all[i])
-    return iter(list_line_speed)
+    return iter(list_line_speed[6:])
 
 
 class Rocket(pygame.sprite.Sprite):
@@ -324,15 +324,15 @@ class Rocket(pygame.sprite.Sprite):
                                                               self.path_image.get_height() // self.image_size))
         self.rect = self.image.get_rect(center=(self.tank_x, self.tank_y))
 
-    def shoot(self):
-        self.shot = True
-        self.shoots_first = time.time()
-        self.mouse_x_shoot, self.mouse_y_shoot = pygame.mouse.get_pos()
-        self.bresenham_line = bresenham(self.tank_x, self.tank_y, self.mouse_x_shoot, self.mouse_y_shoot, speed=7)
+    def shoot(self,shoots_count):
+        if shoots_count == 1:
+            self.shot = True
+            self.shoots_first = time.time()
+            self.mouse_x_shoot, self.mouse_y_shoot = pygame.mouse.get_pos()
+            self.bresenham_line = bresenham(self.tank_x, self.tank_y, self.mouse_x_shoot, self.mouse_y_shoot, speed=7)
 
 
-    def update(self, tank_x, tank_y, shoots_first_tower):
-        shoots_first_rock = time.time() - shoots_first_tower
+    def update(self, tank_x, tank_y):
         if self.shot:
             try:
                 self.tank_x, self.tank_y = next(self.bresenham_line)
@@ -347,19 +347,21 @@ class Rocket(pygame.sprite.Sprite):
 
             self.image = pygame.transform.rotate(self.image, self.angle)
             self.rect = self.image.get_rect(center=(self.tank_x, self.tank_y))
-
-
-        if shoots_first_rock >= 2:
+        else:
             self.tank_y = tank_y
             self.tank_x = tank_x
-            self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
-            self.angle = math.degrees(math.atan2((self.tank_x - self.mouse_x), (self.tank_y - self.mouse_y)))
-            self.image = pygame.transform.scale(self.path_image, (self.path_image.get_width() // self.image_size,
-                                                                  self.path_image.get_height() // self.image_size))
-            self.tank_x = math.sin(self.angle/57) * -45 + self.tank_x;
-            self.tank_y = math.cos(self.angle/57) * -45 + self.tank_y;
-            self.image = pygame.transform.rotate(self.image, self.angle)
-            self.rect = self.image.get_rect(center=(self.tank_x, self.tank_y))
             self.image.set_alpha(0)
+        # else:
+        #     self.tank_y = tank_y
+        #     self.tank_x = tank_x
+        #     self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
+        #     self.angle = math.degrees(math.atan2((self.tank_x - self.mouse_x), (self.tank_y - self.mouse_y)))
+        #     self.image = pygame.transform.scale(self.path_image, (self.path_image.get_width() // self.image_size,
+        #                                                           self.path_image.get_height() // self.image_size))
+        #     self.tank_x = math.sin(self.angle/57) * -45 + self.tank_x;
+        #     self.tank_y = math.cos(self.angle/57) * -45 + self.tank_y;
+        #     self.image = pygame.transform.rotate(self.image, self.angle)
+        #     self.rect = self.image.get_rect(center=(self.tank_x, self.tank_y))
+        #     self.image.set_alpha(0)
 
 

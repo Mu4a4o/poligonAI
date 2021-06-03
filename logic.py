@@ -33,7 +33,7 @@ while running:
     if not rock.shot:
         if mouse[0]:
             tank_tower.shoots(fire=True)
-            rock.shoot()
+            rock.shoot(tank_tower.shoots_count )
 
     # управление танком и изменение его свойств
     if keys[pygame.K_UP] and not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
@@ -71,7 +71,7 @@ while running:
 
     tank_one.draw(sc)
     tank_one.update()
-    rock.update(tank_x=tank_tower.tank_x, tank_y=tank_tower.tank_y, shoots_first_tower=tank_tower.shoots_first)
+    rock.update(tank_x=tank_tower.tank_x, tank_y=tank_tower.tank_y)
     sc.blit(rock.image, rock.rect)
     pygame.display.update()
     sc.fill((0, 0, 0))
