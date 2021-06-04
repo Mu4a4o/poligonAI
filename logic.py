@@ -67,12 +67,11 @@ while running:
         tank_gissinits_right.rotate(right_down_rot=True)
         tank_base.rotate(right_down_rot=True)
         tank_tower.rotate(right_down_rot=True)
-
-
-    tank_one.draw(sc)
-    tank_one.update()
     rock.update(tank_x=tank_tower.tank_x, tank_y=tank_tower.tank_y)
     sc.blit(rock.image, rock.rect)
+    tank_one.draw(sc)
+    tank_one.update()
+
     pygame.display.update()
     sc.fill((0, 0, 0))
     # FPS 60

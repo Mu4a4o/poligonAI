@@ -39,3 +39,6 @@ x, y = next(a)
 print(x,y)
 x, y = next(a)
 print(x,y)
+
+
+def angle_nearest(first_angle,last_angle):

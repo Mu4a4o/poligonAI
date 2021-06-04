@@ -253,7 +253,19 @@ class Tank_tower(pygame.sprite.Sprite):
     def update(self):
         self.shoots()
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        self.angle = math.degrees(math.atan2((self.tank_x - mouse_x), (self.tank_y - mouse_y)))
+        #self.angle = math.degrees(math.atan2((self.tank_x - mouse_x), (self.tank_y - mouse_y)))
+        new_angle = math.degrees(math.atan2((self.tank_x - mouse_x), (self.tank_y - mouse_y)))
+        if self.angle > new_angle:
+            print('>', self.angle,new_angle)
+            self.angle -= 1
+        elif self.angle < new_angle:
+            print('<', self.angle, new_angle)
+            self.angle += 1
+        # elif self.angle == new_angle:
+        #     print('==')
+        #     self.angle == new_angle
+
+
         self.image = pygame.transform.scale(self.image_group_shoots[self.shoots_count],
                                             (self.image_group_shoots[self.shoots_count].get_width() // self.image_size,
                                              self.image_group_shoots[
